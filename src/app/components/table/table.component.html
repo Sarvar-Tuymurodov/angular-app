@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="table">
+    <div class="table__head">
+      <div class="table__search">
+        <input [(ngModel)]="searchText" placeholder="Search" type="text">
+      </div>
+    </div>
+
+    <div class="table__body">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Adress</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of usersList | filterUsers:searchText | slice:(pagination - 1 ) * limit:limit * pagination + 1">
+            <td>{{user.name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.address.street | titlecase}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table__bottom">
+      <div class="table__info">
+        <div class="table__info--current">{{pagination * limit > usersCount ? usersCount : pagination * limit }}</div>
+        <span>of</span>
+        <div class="table__info--all">{{usersCount}}</div>
+      </div>
+      <div class="table__pagination">
+        <div class="table__pagination--prev" [ngClass]="pagination === 1 ? 'disabled': ''"  (click)="prevPage()">
+          &#8592;
+        </div>
+        <div class="table__pagination--next" [ngClass]="pagination >= usersCount / limit ? 'disabled': ''"  (click)="nextPage()">
+          &#8594;
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
